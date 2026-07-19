@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite both the article and this archive."
+type: software
+title: "A capacity theorem for horizon entropy: Barrow Δ ≤ 1 from a long-range entanglement network"
+abstract: "Code and data for the SEDE capacity-theorem paper: a long-range entanglement-network model of a gravitational horizon proving Barrow Δ ≤ 1 and locating the volume/area transition."
+authors:
+  - family-names: Pandev
+    given-names: Stilian
+    orcid: "https://orcid.org/0009-0005-8153-071X"
+    affiliation: "Independent researcher"
+version: 1.0.0
+date-released: 2026-07-23
+doi: 10.5281/zenodo.21525523
+license: MIT
+repository-code: "https://github.com/spsingularity/sede-count"
+keywords:
+  - "holographic dark energy"
+  - "horizon thermodynamics"
+  - "entanglement entropy"
+  - "de Sitter space"
+  - "area law"
+  - "Barrow entropy"
+  - "network capacity"
