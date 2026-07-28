@@ -1,4 +1,4 @@
-# A capacity theorem for horizon entropy: Barrow Δ ≤ 1 from a long-range entanglement network
+# Barrow Δ ≤ 1 from a long-range entanglement network: a capacity theorem and an area–volume dichotomy
 
 *(Companion to the cosmology paper [@Pandev:2026cosmology] and the foundations paper [@Pandev:2026foundations].
 All quantitative claims are reproduced by the accompanying code, each with validation assertions.
