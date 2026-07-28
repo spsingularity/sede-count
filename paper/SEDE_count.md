@@ -12,8 +12,10 @@ We model the degrees of freedom of a gravitational horizon as a network of Planc
 with a bounded total entanglement weight κ (a finite local Hilbert-space dimension) and bond weights
 decaying with separation as w(r) ∝ r^(−α). Three results follow. First, the bond-cut capacity of any
 region Ω obeys C(Ω) ≤ κ|Ω|, so the Barrow entropy deformation satisfies **Δ ≤ 1 as a theorem** of the
-model (the *bound*; attaining Δ = 1 additionally needs the α < d volume-basin geometry, derived here, and a
-cut-saturating horizon *state* — the one assumption the theorem does not remove) — no fractal-horizon geometry is needed, and for long-range couplings (α < d) none is available,
+model (the *bound*; attaining Δ = 1 additionally needs the α < d volume-basin geometry — derived here
+with an explicit finite-size error bound, uniform in position — and a cut-saturating horizon *state*,
+which we identify as the tracial state of the site algebra, leaving open only whether a physical
+horizon is driven to it) — no fractal-horizon geometry is needed, and for long-range couplings (α < d) none is available,
 since the minimum cut is not a surface. Second, the capacity is the enclosed *volume* (Δ = 1) for every
 range α < d and the boundary *area* (Δ = 0) for α > d + 1; gravity's Newtonian reach (α = 1) lies deep
 in the volume phase, and no gravitational coupling produces an intermediate range, so a measured
@@ -133,8 +135,9 @@ $$\Delta \le 1. \tag{2.4}$$
 This is the ceiling of the cosmology paper (§8.1) [@Pandev:2026cosmology] — obtained here without reference to the Hausdorff
 dimension of the horizon, and without the premise that the horizon is a fractal 2-surface.
 Finite local dimension is the whole content. The theorem is model-conditional: it is a statement about
-the leg-budgeted network of §2.1 (and, for the α = d crossover of §2.3, one limit interchange remains
-unproven — §8), not about an arbitrary horizon. Two consequences are worth stating plainly.
+the leg-budgeted network of §2.1 — with the α = d crossover of §2.3 now carrying an explicit
+finite-size error bound (Proposition 2.1) rather than an unproven limit interchange — not about an
+arbitrary horizon. Two consequences are worth stating plainly.
 First, Δ > 1 is impossible in this framework, so a high-significance measurement of Δ > 1
 falsifies it with no parameter available to absorb the result. Second, whatever selects
 Δ = 1 must be a *saturation* argument, since (2.3) is the only bound in play.
@@ -151,6 +154,43 @@ For α < d the integral is dominated by its upper limit: the bond mass sits at t
 separations, the outward fraction tends to unity for every interior site, and
 
 $$C(\rho) \to \kappa\, n\, V(\rho) \qquad \text{(volume law, budget saturated).} \tag{2.6}$$
+
+As stated, (2.6) is a limiting statement, and the limits do not commute: at fixed ambient size L the
+outward fraction *decreases* with ρ and must vanish as ρ → L, so "dominated by the upper limit"
+cannot be read as ρ → ∞ at fixed L. The following proposition replaces the limit by an explicit
+finite-size error, uniform in the site position, and is what the volume law rests on here.
+
+> **Proposition 2.1 (uniform outward-fraction bound).** Let sites of density n = ℓ^{−d} fill a ball
+> of radius L, let α < d, and let f_out(x) be the fraction of the budget of a site at x, |x| ≤ ρ,
+> carried by bonds crossing the sphere of radius ρ. Then for every such x,
+> $$f_{\rm out}(x) \;\ge\; 1 - K(d,\alpha)\,(\rho/L)^{\,d-\alpha}, \qquad
+> K(d,\alpha) = \frac{S_{d-1}\,2^{\,d-\alpha}/(d-\alpha)}{c_d\,(1-2^{-d})\,2^{-\alpha}},$$
+> with S_{d−1} the unit-sphere surface and c_d the unit-ball volume. Consequently
+> $$\kappa\,n\,V(\rho)\left[1 - K(d,\alpha)(\rho/L)^{d-\alpha}\right] \;\le\; C(\rho) \;\le\; \kappa\,n\,V(\rho). \tag{2.6a}$$
+>
+> *Proof.* Every point of the interior ball lies within distance 2ρ of x, so the inward mass is at
+> most n S_{d−1}∫_0^{2ρ} u^{d−1−α}du = n S_{d−1}(2ρ)^{d−α}/(d−α), the integral converging at u = 0
+> precisely because α < d. Every point of the outer shell L/2 < |y| < L lies within distance 2L of
+> x, so the outward mass is at least n c_d(1−2^{−d})L^d·(2L)^{−α}. Since f_out = 1/(1 + in/out) ≥
+> 1 − in/out, the ratio of these two gives the stated K. The upper bound in (2.6a) is the capacity
+> theorem of §2.2. ∎
+
+Three things follow. First, the volume law is a statement at **finite** (ℓ, ρ, L) with a controlled
+error, so no interchange of ρ → ∞ with the continuum limit is invoked. Second, the same condition
+α < d that makes the short-distance integral converge is what makes the discrete-to-continuum
+replacement safe: the near-field discrepancy between the lattice sum and the integral is relatively
+O((ℓ/ρ)^{d−α}), vanishing in the same regime. Third, the error term makes explicit *why* Δ = 1 exactly
+is the L → ∞ endpoint of §5 rather than a finite-size result — the deficit is governed by ρ/L, not by
+ρ alone.
+
+The bound is rigorous but its constant is not sharp. Numerically (`src/outward_fraction_bound.py`,
+d = 3, L = 200, exact angular average), the measured capacity deficit follows the predicted power
+(ρ/L)^{d−α} with a constant of order unity: at gravity's α = 1 the fitted deficit exponent is 2.03
+against the predicted d − α = 2, with K_measured ≈ 0.79 stable across ρ ∈ [5, 40], while the proved
+constant is K = 13.7 — valid, and loose by a factor ≈ 17. The fit degrades as α → d (at α = 2.5 the
+fitted exponent is 0.79 against a predicted 0.5), which is expected: there the deficit is no longer
+small and the leading term does not yet control the behaviour. For gravity's range the asymptotics
+are firmly in their regime.
 
 For α > d the integral converges at small u: only a surface layer of thickness O(ℓ_P)
 contributes, and C(ρ) ∝ A(ρ) (area law). The crossover is at α = d exactly — the same
@@ -521,6 +561,26 @@ that this is the one thing §2 does not remove: the network fixes the *count* �
 freedom a region's entropy may draw on — while the maximally-scrambled state fixes that they are all
 in fact used. §2 makes the count a theorem; the value of the entropy still rests on the state.
 
+**The saturating state is not exotic: it is the tracial state of the site algebra.** The assumption
+can be sharpened from "some state saturates every cut" to an identification internal to the model.
+Each site carries a finite Hilbert dimension e^κ, so the site algebra of a region Ω is a
+finite-dimensional factor with dim 𝓗_Ω = e^{κ|Ω|}. Its maximally mixed (tracial) state assigns
+$$S(\Omega) \;=\; \log \dim \mathcal{H}_\Omega \;=\; \kappa|\Omega| \qquad \text{for \emph{every} } \Omega,$$
+i.e. it attains the capacity bound of §2.2 identically, region by region — not as a fine-tuned
+configuration but as the maximum-entropy state of the very algebra whose capacity §2 bounds. The
+"cut-saturating state" and the "maximally scrambled state" are therefore the same object described
+from two sides, and S = C holds in it by construction.
+
+Two qualifications keep this honest. First, saturation of *every* cut requires the global state to be
+mixed: a pure state obeys S(Ω) = S(Ω^c) and is capped by min(κ|Ω|, κ|Ω^c|), so it cannot saturate
+both a region and its complement. For a horizon-bounded region mixedness is the physical situation —
+the exterior purifies the interior — and it is also the situation in the crossed-product description,
+whose maximal-entropy state is likewise maximally mixed. Second, this identifies the saturating
+state; it does not prove that a given *physical* horizon is in it. What it removes is the suspicion
+that the saturating state is a special construction invented to reach Δ = 1: it is the flat state of
+the model's own algebra, and the remaining question — whether horizon dynamics drives the state to it
+— is the scrambling question already stated, not an additional one.
+
 ### 6.2 The entropy density and the occupancy gate
 
 On the volume branch (α < d) with the saturating state, S(ρ) = C(ρ) = κ n V(ρ), so the entropy
@@ -643,17 +703,23 @@ entropy draws on — is a bond count, and that bond count is the enclosed volume
 horizon. Consistently with the foundations paper, the algebra *type* is not the discriminator (an accelerating
 attractor is II₁-compatible either way); the calibration is, and the calibration is the leg budget.
 
-**What is not settled.** Two things, stated plainly. First, the α = d crossover of §2.3 is
-physics-rigorous but not yet a theorem: the dominance argument on the outward-fraction integral (2.5) is
-correct term by term, but the interchange of the ρ → ∞ and continuum limits is not justified, and a
-mathematically-minded reader will want it bounded — this is the one place the *derivation*, as opposed to
-the numerics, is incomplete. Second, and more fundamental, the identification S = C is the state question
+**What is not settled.** One thing, stated plainly — the list is shorter than in earlier drafts, and
+we record what moved. The α = d crossover of §2.3 previously rested on a dominance argument that was
+correct term by term but interchanged the ρ → ∞ and continuum limits without justification;
+Proposition 2.1 now replaces that interchange with a two-sided bound at finite (ℓ, ρ, L), uniform in
+the site position, whose error term is explicitly O((ρ/L)^{d−α}) and is verified numerically. The
+derivation gap is closed; what remains there is only that the proved constant is not sharp (loose by
+≈ 17 at α = 1), which affects no conclusion. What is *not* settled is the identification S = C, the state question
 (§6.1): the network gives the count, the maximally-scrambled state gives that the count is attained. That
 assumption is route A of the foundations paper, and it is the honest residue of the whole programme — now a single
 question, and one shared with area-law black holes (a black hole carries the same maximally-entangled
 horizon state; what differs is that it is undriven, so its capacity is the boundary count, §6.2). The
-open content of SEDE is thereby relocated, in its entirety, from the *count* to the *state* — and the
-state half is settled, independently of SEDE, by the scrambling / Page-curve physics the foundations paper cites.
+open content of SEDE is thereby relocated, in its entirety, from the *count* to the *state*. That state
+question is itself now narrower than it was: §6.1 identifies the saturating state as the tracial state
+of the site algebra — the flat state of the model's own algebra, which attains the capacity bound for
+every region identically — so what remains is not "does a saturating state exist" but "is a physical
+horizon driven to it," which is the scrambling / Page-curve question the foundations paper takes up. We
+do not claim that last step is closed here.
 
 **Falsifiability.** Because the count is discrete for a gravitational horizon (§2.4), the prediction is a
 *point*, Δ = 1, not a fitted exponent: an intermediate Δ is not a universality class to be selected but
@@ -695,6 +761,9 @@ validation assertions at each stage:
 - `src/capacity_radial.py` — spherical reduction with the exact angular average; the
   α-crossover table of §2.3 and the large-ρ C(ρ)/ρ² diagnostic (marginal-log at α = d + 1
   vs clean area at α > d + 1), asserted.
+- `src/outward_fraction_bound.py` — the finite-size outward-fraction bound of Proposition 2.1:
+  fits the capacity-deficit exponent against the predicted d − α and checks every measured deficit
+  against the proved bound K(ρ/L)^{d−α}, asserted.
 - `src/edge_deficit.py` — Newton-kernel solve at α = 1; the deficit law and the
   convergence of c (§5.1).
 - `src/horizon_constraint.py` — symbolic expansion of the apparent-horizon condition,
