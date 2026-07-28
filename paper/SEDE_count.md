@@ -719,13 +719,25 @@ stage carrying validation assertions that all pass, and the four figures regener
 computations via `make_figures.py`. No observational data were generated or analysed beyond the standard
 public inputs cited in the companion papers.
 
+## Funding
+
+This research received no external funding.
+
+## Competing interests
+
+The author, an independent researcher, declares no competing interests.
+
+## Ethics statement
+
+Not applicable. This work is purely theoretical and involved no human participants, human data or
+tissue, and no animal subjects.
+
 ## Acknowledgements
 
-This research received no external funding, and the author — an independent researcher — declares no
-competing interests. As sole author, S. Pandev conceived and carried out the study, performed and
-independently verified all analyses, and wrote the manuscript, taking full responsibility for its
-content. Artificial-intelligence tools (large language models) assisted with drafting and editing the
-manuscript, developing and cross-checking the analysis code, and literature searches; no AI tool is an
-author.
+As sole author, S. Pandev conceived and carried out the study, performed and independently verified
+all analyses, and wrote the manuscript, taking full responsibility for its content.
+Artificial-intelligence tools (large language models) assisted with drafting and editing the
+manuscript, developing and cross-checking the analysis code, and literature searches; no AI tool is
+an author.
 
 ## References

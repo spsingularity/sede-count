@@ -34,7 +34,8 @@ perl -0pi -e 's#\\citet\{#\\citep{#g' tex/SEDE_count.tex
   xelatex -interaction=nonstopmode SEDE_count.tex >>SEDE_count.build.log 2>&1 ) || true
 
 if [ -f tex/SEDE_count.pdf ]; then
-  echo "built paper/tex/SEDE_count.pdf"
+  cp tex/SEDE_count.pdf SEDE_count.pdf   # keep the canonical top-level PDF in sync
+  echo "built paper/SEDE_count.pdf"
   grep -c "^!" tex/SEDE_count.build.log | awk '{print $1" LaTeX errors (see tex/SEDE_count.build.log)"}'
   grep -c "Warning--" tex/SEDE_count.build.log 2>/dev/null | awk '{print $1" bibtex warnings"}'
 else

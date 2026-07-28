@@ -76,7 +76,8 @@ def main(inp, outp):
             if re.match(r"^## References\s*$", L):
                 continue   # natbib's \bibliography prints its own "References" heading — drop ours
             m = re.match(r"^## (Code and data availability|Data availability statement|"
-                         r"Use of AI tools|Funding and competing interests|Reproducibility|"
+                         r"Use of AI tools|Funding and competing interests|Funding|Competing interests|"
+                         r"Ethics statement|Reproducibility|"
                          r"Acknowledgements|Acknowledgments)\s*$", L)
             if m:
                 out.append(f"## {m.group(1)} {{.unnumbered}}"); continue
