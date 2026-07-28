@@ -79,6 +79,14 @@
 
 \setlength{\emergencystretch}{3em}
 
+
+% --- make bibliography identifiers clickable -------------------------------
+% Several bibliography styles (SciPost, iopart-num) emit \eprint{...} as plain
+% text, leaving arXiv identifiers unclickable in the reference list. Redefine it
+% to a hyperlink. Works for both new (2004.09444) and old (gr-qc/9504004) ids.
+\providecommand{\eprint}[1]{#1}
+\AtBeginDocument{\renewcommand{\eprint}[1]{\href{https://arxiv.org/abs/#1}{#1}}}
+
 \begin{document}
 % short running head (iopart overflows the page header with the full title)
 \title[Barrow $$\Delta \le 1$$ from a long-range entanglement network]{$title$}
