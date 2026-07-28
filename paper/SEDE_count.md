@@ -2,7 +2,14 @@
 
 *(Companion to the cosmology paper [@Pandev:2026cosmology] and the foundations paper [@Pandev:2026foundations].
 All quantitative claims are reproduced by the accompanying code, each with validation assertions.
-The cosmological results of the cosmology and foundations papers stand independently of the reduction developed here.)*
+The cosmological results of the cosmology and foundations papers stand independently of the reduction developed here.
+**Conversely, and for the reader who has not seen those companions: the results of §2 — the capacity
+theorem C(Ω) ≤ κ|Ω| and hence Δ ≤ 1, the area/volume dichotomy, the α = d crossover with its
+finite-size bound, and the α < d absence of a minimum-cut surface — are self-contained. They are
+statements about the network model of §2.1 alone, take no input from either companion, and are
+state-independent (§6.1). The companions supply the cosmological motivation for asking the question
+and the state half of the interpretation; neither is used to obtain the theorem.** Both companion
+manuscripts are available from the author on request.)*
 
 ---
 
@@ -24,7 +31,10 @@ infrared-cutoff endpoint L → ∞ — a stated choice, not a derivation. What t
 structural capacity (not manifestly the generalized entropy), and the volume identification is the
 non-default, empirically-bet-on branch: DESI DR3 + Euclid decide Δ = 1 versus 0 at a forecast
 σ(Δ) ≈ 0.09. This shortens — it does not eliminate — the assumption list behind the volume-law
-postulate of Structural Entropy Dark Energy.
+postulate of Structural Entropy Dark Energy. The results of §2 are self-contained and can be assessed
+on their own: the capacity theorem, the dichotomy and the crossover are statements about the network
+model of §2.1 alone, are state-independent, and take no input from the companion papers cited here,
+which supply the cosmological motivation for the question and the state half of its interpretation.
 
 **Keywords —** holographic dark energy; horizon thermodynamics; entanglement entropy; de Sitter
 holography; Barrow entropy; long-range systems; apparent horizon; dark energy.
