@@ -792,7 +792,7 @@ validation assertions at each stage:
 
 The code that supports the findings of this article is openly available at
 <https://github.com/spsingularity/sede-count>, with a tagged release archived at Zenodo,
-DOI [10.5281/zenodo.21525523](https://doi.org/10.5281/zenodo.21525523). Every quantitative claim is reproduced from a single entry point
+DOI [10.5281/zenodo.21525522](https://doi.org/10.5281/zenodo.21525522). Every quantitative claim is reproduced from a single entry point
 (`run_all.py`), each
 stage carrying validation assertions that all pass, and the four figures regenerate from the same
 computations via `figures/make_figures.py`. No observational data were generated or analysed beyond the standard
