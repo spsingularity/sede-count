@@ -661,7 +661,7 @@ coincidence but the sphere's freedom to be displaced. We reproduce this
 independently, by a second geometric route (surface-of-revolution
 principal curvatures) matched to the spectrum, so the GR leg of this
 argument rests on a published 2008 theorem rather than on our own
-symbolic algebra (\texttt{ams\_stability.py}).
+symbolic algebra (\texttt{src/ams\_stability.py}).
 
 \emph{Slicing caveat.} The clean \emph{elliptic}
 \((\partial _{\mathrm{t}}\)-free) form is specific to the shear-free
@@ -1355,8 +1355,8 @@ entry point, with validation assertions at each stage:
   \texttt{run\_all.py} --- single entry point; runs every stage with
   validation assertions.
 \item
-  \texttt{make\_figures.py} --- regenerates the four figures from the
-  same \texttt{src/} computations (Figs 1--4 →
+  \texttt{figures/make\_figures.py} --- regenerates the four figures
+  from the same \texttt{src/} computations (Figs 1--4 →
   \texttt{output/count\_fig\{0–3\}\_*.png}).
 \end{itemize}
 
@@ -1374,9 +1374,10 @@ Every quantitative claim is reproduced from a single entry point
 (\texttt{run\_all.py}, also wired into the repository-wide
 \texttt{reproduce\_all.py} as the \texttt{netcount} stage), each stage
 carrying validation assertions that all pass, and the four figures
-regenerate from the same computations via \texttt{make\_figures.py}. No
-observational data were generated or analysed beyond the standard public
-inputs cited in the companion papers.
+regenerate from the same computations via
+\texttt{figures/make\_figures.py}. No observational data were generated
+or analysed beyond the standard public inputs cited in the companion
+papers.
 
 \section*{Funding}\label{funding}
 \addcontentsline{toc}{section}{Funding}
@@ -1400,9 +1401,11 @@ participants, human data or tissue, and no animal subjects.
 As sole author, S. Pandev conceived and carried out the study, performed
 and independently verified all analyses, and wrote the manuscript,
 taking full responsibility for its content. Artificial-intelligence
-tools (large language models) assisted with drafting and editing the
-manuscript, developing and cross-checking the analysis code, and
-literature searches; no AI tool is an author.
+tools --- Claude Opus 4.x (Anthropic) --- assisted with drafting and
+editing the manuscript, developing and cross-checking the analysis code,
+and literature searches; all output, including every literature
+reference, was checked by the author, who takes full responsibility for
+the content. No AI tool is an author.
 \bibliographystyle{iopart-num}
 \bibliography{refs,refs_foundations}
 \end{document}

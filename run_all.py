@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Single entry point. Regenerates every number in the Paper III draft, with assertions."""
+"""Single entry point. Regenerates every number in the Paper II draft, with assertions."""
 import sys, os, time, importlib
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
 

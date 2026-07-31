@@ -13,7 +13,7 @@ retractions) lives there.
 
 ## Layout
 - `paper/` — manuscript sources (md + tex + build scripts; built PDF included); `paper/tools/` = build tooling
-- `src/` + `reproduce.py` — the capacity/deficit computations backing every number in the paper (`results/RESULTS.txt` = reference output)
+- `src/` + `run_all.py` — the capacity/deficit computations backing every number in the paper (`results/RESULTS.txt` = reference output)
 - `figures/make_figures.py` — regenerates the four figures into `results/`
 - `results/` — reference outputs (figures + RESULTS.txt)
 

@@ -354,7 +354,7 @@ spectrum is the published one, ℓ(ℓ+1) − 2, and the **ℓ = 1 kernel is the
 every MOTS stability operator carries** — not a coincidence but the sphere's freedom to be
 displaced. We reproduce this independently, by a second geometric route (surface-of-revolution
 principal curvatures) matched to the spectrum, so the GR leg of this argument rests on a published
-2008 theorem rather than on our own symbolic algebra (`ams_stability.py`).
+2008 theorem rather than on our own symbolic algebra (`src/ams_stability.py`).
 
 *Slicing caveat.* The clean *elliptic* (∂_t-free) form is specific to the shear-free Newtonian
 slice with flat spatial sections. The AMS matter term for FRW is 8π T_{ab}ℓ^a k^b = 3H² + Ḣ, so the
@@ -783,7 +783,7 @@ validation assertions at each stage:
   −(1/R̄)(∇²_S + 2), the published spectrum ℓ(ℓ+1) − 2 with the ℓ = 1 translation zero mode, and the
   AMS matter term 8π T_{ab}ℓ^a k^b = 3H² + Ḣ that isolates the slicing caveat.
 - `run_all.py` — single entry point; runs every stage with validation assertions.
-- `make_figures.py` — regenerates the four figures from the same `src/` computations
+- `figures/make_figures.py` — regenerates the four figures from the same `src/` computations
   (Figs 1–4 → `output/count_fig{0–3}_*.png`).
 
 ---
@@ -795,7 +795,7 @@ The code that supports the findings of this article is openly available at
 DOI [10.5281/zenodo.21525523](https://doi.org/10.5281/zenodo.21525523). Every quantitative claim is reproduced from a single entry point
 (`run_all.py`, also wired into the repository-wide `reproduce_all.py` as the `netcount` stage), each
 stage carrying validation assertions that all pass, and the four figures regenerate from the same
-computations via `make_figures.py`. No observational data were generated or analysed beyond the standard
+computations via `figures/make_figures.py`. No observational data were generated or analysed beyond the standard
 public inputs cited in the companion papers.
 
 ## Funding
@@ -815,8 +815,8 @@ tissue, and no animal subjects.
 
 As sole author, S. Pandev conceived and carried out the study, performed and independently verified
 all analyses, and wrote the manuscript, taking full responsibility for its content.
-Artificial-intelligence tools (large language models) assisted with drafting and editing the
-manuscript, developing and cross-checking the analysis code, and literature searches; no AI tool is
-an author.
+Artificial-intelligence tools — Claude Opus 4.x (Anthropic) — assisted with drafting and
+editing the manuscript, developing and cross-checking the analysis code, and literature
+searches; all output, including every literature reference, was checked by the author, who takes full responsibility for the content. No AI tool is an author.
 
 ## References
