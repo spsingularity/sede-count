@@ -1,5 +1,7 @@
-% Minimal pandoc template for CQG (iopart.cls). Engine: xelatex (STIX Two Text).
-\documentclass[12pt]{iopart}
+% Pandoc template for Physical Review D (REVTeX 4.2, preprint/one-column).
+% Engine: pdflatex — REVTeX is pdflatex-native; xelatex+STIX lacks the glyph REVTeX
+% uses for the email footnote marker. Prose Unicode is handled by newunicodechar below.
+\documentclass[aps,prd,preprint,nofootinbib,superscriptaddress]{revtex4-2}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -8,19 +10,17 @@
   \usepackage{fontspec}
   \setmainfont{STIX Two Text}
 \fi
-% iopart pre-defines \equation*; free it so amsmath can load cleanly, then iopams (amssymb+bold Greek)
-\makeatletter
-\expandafter\let\csname equation*\endcsname\relax
-\expandafter\let\csname endequation*\endcsname\relax
-\makeatother
-\usepackage{amsmath}
-\usepackage{iopams}
-\usepackage[numbers,sort&compress]{natbib}   % iopart-num.bst is a natbib style
-\usepackage{graphicx}
-\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
-\usepackage{orcidlink} % ORCID icon next to the author
 
-% --- prose Unicode operators -> math ---
+\usepackage{amsmath,amssymb,graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{orcidlink}
+
+% make bare math commands the preprocessors may leave in text mode robust (surd etc.)
+\makeatletter
+\let\pandocsurd\surd \renewcommand{\surd}{\ensuremath{\pandocsurd}}
+\makeatother
+
+% --- prose Unicode operators -> math (works under xe/pdf latex) ---
 \usepackage{newunicodechar}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{∂}{\ensuremath{\partial}}
@@ -46,6 +46,12 @@
 \newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
 \newunicodechar{𝓗}{\ensuremath{\mathcal{H}}}
 \newunicodechar{√}{\ensuremath{\surd}}
+% Paper II notation that pdflatex (unlike the iopart/xelatex build) cannot resolve on its own.
+% NOTE: the areal radius is written \bar{R} in the markdown source, NOT as a U+0304 combining
+% macron. A newunicodechar mapping for U+0304 cannot work — a combining mark follows its base
+% letter, so LaTeX cannot reach back to accent it, and any forward-placed glyph renders R̄² as the
+% physically WRONG R^{-2}. Keep the source free of U+0304.
+\newunicodechar{⁴}{\ensuremath{^{4}}}                % U+2074 superscript four
 \newunicodechar{∼}{\ensuremath{\sim}}
 \newunicodechar{∇}{\ensuremath{\nabla}}
 \newunicodechar{↔}{\ensuremath{\leftrightarrow}}
@@ -57,6 +63,7 @@
 \newunicodechar{′}{\ensuremath{{}^\prime}}
 \newunicodechar{Ḣ}{\ensuremath{\dot H}}
 \newunicodechar{Ṡ}{\ensuremath{\dot S}}
+\newunicodechar{₊}{\ensuremath{{}_{+}}}
 
 % --- pandoc body requirements ---
 \usepackage{longtable,booktabs,array}
@@ -75,33 +82,29 @@
 }
 \makeatother
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\graphicspath{{../../results/paper/}{../../results/}}
+\graphicspath{{../}{../figures/}}
+
+% DOIs must never hyphenate: a broken 'zen-odo' does not resolve if copied
+\hyphenation{zenodo Zenodo}
 
 \setlength{\emergencystretch}{3em}
 
-
-% --- make bibliography identifiers clickable -------------------------------
-% Several bibliography styles (SciPost, iopart-num) emit \eprint{...} as plain
-% text, leaving arXiv identifiers unclickable in the reference list. Redefine it
-% to a hyperlink. Works for both new (2004.09444) and old (gr-qc/9504004) ids.
-\providecommand{\eprint}[1]{#1}
-\AtBeginDocument{\renewcommand{\eprint}[1]{\href{https://arxiv.org/abs/#1}{#1}}}
-
 \begin{document}
-% short running head (iopart overflows the page header with the full title)
-\title[Barrow $\Delta \le 1$ from a long-range entanglement network]{A
-capacity theorem for long-range entanglement networks: the area--volume
-dichotomy and a bound on Barrow entropy}
+
+\title{A capacity theorem for long-range entanglement networks: the
+area--volume dichotomy and a bound on Barrow entropy}
+
 \author{Stilian Pandev\,\orcidlink{0009-0005-8153-071X}}
-\address{Independent researcher}
-\ead{stilianpandev@gmail.com}
-\begin{abstract}We model the degrees of freedom of a gravitational
-horizon as a network of Planck-density sites, each with a bounded total
-entanglement weight \(\kappa\) --- a finite local Hilbert-space
-dimension --- and bond weights decaying with separation as
-\(w(r) \propto  r^{-\alpha }\). Three results follow, each a theorem
-about this model alone. First, a capacity theorem: the bond-cut capacity
-of any region \(\Omega\) obeys
+\email{stilianpandev@gmail.com}
+\affiliation{Independent researcher}
+
+\begin{abstract}
+We model the degrees of freedom of a gravitational horizon as a network
+of Planck-density sites, each with a bounded total entanglement weight
+\(\kappa\) --- a finite local Hilbert-space dimension --- and bond
+weights decaying with separation as \(w(r) \propto  r^{-\alpha }\).
+Three results follow, each a theorem about this model alone. First, a
+capacity theorem: the bond-cut capacity of any region \(\Omega\) obeys
 \(C(\Omega ) \leq  \kappa\)\textbar{}\(\Omega\)\textbar, so the Barrow
 entropy deformation satisfies \textbf{\(\Delta  \leq  1\)} identically;
 no fractal-horizon geometry is needed to bound it, and for long-range
@@ -130,11 +133,16 @@ volume-law postulate of Structural Entropy Dark Energy. The results of
 crossover are statements about the network model of §2.1 alone, are
 state-independent, and take no input from the companion papers cited
 here, which supply only the cosmological motivation for the question and
-the state half of its interpretation.\end{abstract}
-\vspace{1pc}\noindent{\it Keywords}: holographic dark energy; horizon
+the state half of its interpretation.
+\end{abstract}
+
+\maketitle
+
+\noindent\textbf{Keywords:} holographic dark energy; horizon
 thermodynamics; entanglement entropy; de Sitter holography; Barrow
 entropy; long-range systems; apparent horizon; dark energy
-\maketitle
+\vspace{6pt}
+
 \section{Introduction}\label{sec-1}
 
 How much entropy can a region of a gravitational horizon carry, and does
@@ -272,7 +280,7 @@ Let the horizon degrees of freedom be sites of a network filling a ball
 of radius L at number density \(n = \ell _{\mathrm{P}}^{-d}\), d = 3,
 with symmetric bond weights
 
-\[w_{ij} \propto r_{ij}^{-\alpha}, \qquad \sum_j w_{ij} = \kappa \quad\text{for every } i. \tag{2.1}\]
+\begin{equation}w_{ij} \propto r_{ij}^{-\alpha}, \qquad \sum_j w_{ij} = \kappa \quad\text{for every } i. \tag{2.1}\end{equation}
 
 The budget in (2.1) is not an idealisation. In a tensor-network
 representation the leg weight attached to a site is ln(local
@@ -286,7 +294,7 @@ solution. All numbers below are computed at Sinkhorn residual
 We take as the count the \textbf{bond-cut capacity} of a region
 \(\Omega\),
 
-\[C(\Omega) = \sum_{i\in\Omega,\, j\notin\Omega} w_{ij}, \tag{2.2}\]
+\begin{equation}C(\Omega) = \sum_{i\in\Omega,\, j\notin\Omega} w_{ij}, \tag{2.2}\end{equation}
 
 the standard upper bound on the entanglement entropy of \(\Omega\) with
 its complement. C is a capacity, not an entropy: whether it is attained
@@ -297,13 +305,13 @@ C.
 
 From (2.1) and (2.2), for any region \(\Omega\),
 
-\[C(\Omega) \le \sum_{i\in\Omega} \sum_j w_{ij} = \kappa\,|\Omega|. \tag{2.3}\]
+\begin{equation}C(\Omega) \le \sum_{i\in\Omega} \sum_j w_{ij} = \kappa\,|\Omega|. \tag{2.3}\end{equation}
 
 The entropy of a region cannot exceed its degree-of-freedom count.
 Writing \(S \propto  R^{2+\Delta }\) in the Barrow parametrisation
 \(S = (A/A_{0})^{1+\Delta /2}\), (2.3) gives
 
-\[\Delta \le 1. \tag{2.4}\]
+\begin{equation}\Delta \le 1. \tag{2.4}\end{equation}
 
 This is the ceiling of the cosmology paper (§8.1)
 \citep{Pandev:2026cosmology} --- obtained here without reference to the
@@ -328,13 +336,13 @@ The bond mass it places at separations in {[}u, u+du{]} scales as
 \(u^{d-1-\alpha }\) du. Its \textbf{outward fraction} --- the share of
 its budget spent on bonds crossing \(\rho\) --- is therefore governed by
 
-\[\int^L u^{d-1-\alpha}\,du \quad\text{versus}\quad \int^\rho u^{d-1-\alpha}\,du. \tag{2.5}\]
+\begin{equation}\int^L u^{d-1-\alpha}\,du \quad\text{versus}\quad \int^\rho u^{d-1-\alpha}\,du. \tag{2.5}\end{equation}
 
 For \(\alpha  < d\) the integral is dominated by its upper limit: the
 bond mass sits at the largest separations, the outward fraction tends to
 unity for every interior site, and
 
-\[C(\rho) \to \kappa\, n\, V(\rho) \qquad \text{(volume law, budget saturated).} \tag{2.6}\]
+\begin{equation}C(\rho) \to \kappa\, n\, V(\rho) \qquad \text{(volume law, budget saturated).} \tag{2.6}\end{equation}
 
 As stated, (2.6) is a limiting statement, and the limits do not commute:
 at fixed ambient size L the outward fraction \emph{decreases} with
@@ -349,11 +357,11 @@ density \(n = \ell ^{-d}\) fill a ball of radius L, let \(\alpha  < d\),
 and let \(f_{\mathrm{out}}(x)\) be the fraction of the budget of a site
 at x, \textbar x\textbar{} ≤ \(\rho\), carried by bonds crossing the
 sphere of radius \(\rho\). Then for every such x,
-\[f_{\rm out}(x) \;\ge\; 1 - K(d,\alpha)\,(\rho/L)^{\,d-\alpha}, \qquad
-K(d,\alpha) = \frac{S_{d-1}\,2^{\,d-\alpha}/(d-\alpha)}{c_d\,(1-2^{-d})\,2^{-\alpha}},\]
+\begin{equation}f_{\rm out}(x) \;\ge\; 1 - K(d,\alpha)\,(\rho/L)^{\,d-\alpha}, \qquad
+K(d,\alpha) = \frac{S_{d-1}\,2^{\,d-\alpha}/(d-\alpha)}{c_d\,(1-2^{-d})\,2^{-\alpha}},\end{equation}
 with \(S_{d-1}\) the unit-sphere surface and \(c_{\mathrm{d}}\) the
 unit-ball volume. Consequently
-\[\kappa\,n\,V(\rho)\left[1 - K(d,\alpha)(\rho/L)^{d-\alpha}\right] \;\le\; C(\rho) \;\le\; \kappa\,n\,V(\rho). \tag{2.6a}\]
+\begin{equation}\kappa\,n\,V(\rho)\left[1 - K(d,\alpha)(\rho/L)^{d-\alpha}\right] \;\le\; C(\rho) \;\le\; \kappa\,n\,V(\rho). \tag{2.6a}\end{equation}
 
 \emph{Proof.} Every point of the interior ball lies within distance
 \(2\rho\) of x, so the inward mass is at most n
@@ -381,7 +389,7 @@ than a finite-size result --- the deficit is governed by \(\rho /L\),
 not by \(\rho\) alone.
 
 The bound is rigorous but its constant is not sharp. Numerically
-(\texttt{src/outward\_fraction\_bound.py}, d = 3, L = 200, exact angular
+(\texttt{src/\allowbreak outward\_\allowbreak fraction\_\allowbreak bound.\allowbreak py}, d = 3, L = 200, exact angular
 average), the measured capacity deficit follows the predicted power
 \((\rho /L)^{d-\alpha }\) with a constant of order unity: at gravity's
 \(\alpha  = 1\) the fitted deficit exponent is 2.03 against the
@@ -494,7 +502,7 @@ toward 2.5. The volume phase, q = 3, is reached only for
 
 Identifying the saturated capacity with a constant entropy density,
 
-\[s_0 = \kappa\, n = \kappa/\ell_P^3, \tag{2.7}\]
+\begin{equation}s_0 = \kappa\, n = \kappa/\ell_P^3, \tag{2.7}\end{equation}
 
 recovers eq. (2.2) of the cosmology paper \citep{Pandev:2026cosmology},
 \(s_{\mathrm{grav}} = s_{0}\), with the constant identified as legs per
@@ -508,7 +516,7 @@ Equation (2.6) holds for \textbf{every} \(\alpha  < d\), not merely
 model therefore never requires the specific form w(r) = 1/r. It requires
 only
 
-\[w(r)\ \text{decays slower than}\ r^{-d}. \tag{2.8}\]
+\begin{equation}w(r)\ \text{decays slower than}\ r^{-d}. \tag{2.8}\end{equation}
 
 Any coupling of gravitational reach satisfies (2.8) with room to spare.
 We are careful about what is and is not binary. The capacity exponent is
@@ -639,7 +647,7 @@ is pure trace), the constant-mean-curvature condition
 h\textbar² + O(\textbar{}\(\nabla _{\mathrm{S}}\) h\textbar⁴){]} carries
 no cubic term, the constraint reads
 
-\[\nabla_S^2 h + 2h + 2h^2 = 2\mathcal{S}, \qquad \mathcal{S} = \Phi + \Psi + \dot\Psi/H - H^{-1}\partial_R \Psi. \tag{2.9}\]
+\begin{equation}\nabla_S^2 h + 2h + 2h^2 = 2\mathcal{S}, \qquad \mathcal{S} = \Phi + \Psi + \dot\Psi/H - H^{-1}\partial_R \Psi. \tag{2.9}\end{equation}
 
 There is no \((\nabla h)^{2}\) term at second order, and --- decisively
 --- no \(\partial _{\mathrm{t}}\) h at any order. The operator
@@ -675,7 +683,7 @@ a coincidence but the sphere's freedom to be displaced. We reproduce
 this independently, by a second geometric route (surface-of-revolution
 principal curvatures) matched to the spectrum, so the GR leg of this
 argument rests on a published 2008 theorem rather than on our own
-symbolic algebra (\texttt{src/ams\_stability.py}).
+symbolic algebra (\texttt{src/\allowbreak ams\_\allowbreak stability.\allowbreak py}).
 
 \emph{Slicing caveat.} The clean \emph{elliptic}
 \((\partial _{\mathrm{t}}\)-free) form is specific to the shear-free
@@ -789,7 +797,7 @@ the outward fraction falls short, because the bond mass a site can place
 beyond \(\rho\) is limited by the ambient size. From (2.5), for
 \(\alpha  < d\),
 
-\[1 - s(\rho)/\kappa = D(x) = c\, x^{d-\alpha}, \qquad x \equiv \rho/L. \tag{5.1}\]
+\begin{equation}1 - s(\rho)/\kappa = D(x) = c\, x^{d-\alpha}, \qquad x \equiv \rho/L. \tag{5.1}\end{equation}
 
 At \(\alpha  = 1\) no short-distance regulator is needed: Newton's
 theorem gives the exact angular average
@@ -817,7 +825,7 @@ M & \(D(0.02)/x^{2}\) & \(D(0.03)/x^{2}\) \\
 6000 & 0.67305 & 0.67315 \\
 \end{longtable}
 
-\[c = \lim_{x\to0} \frac{D(x)}{x^2} = 0.6730 \pm 0.0001,\]
+\begin{equation}c = \lim_{x\to0} \frac{D(x)}{x^2} = 0.6730 \pm 0.0001,\end{equation}
 
 with a fitted exponent 2.0018 (predicted \(d - \alpha  = 2\)). (Note
 that \(D/x^{2}\) drifts upward with x --- 0.6731 at x = 0.02, 0.6817 at
@@ -834,7 +842,7 @@ closed form and do not assert one.
 
 With \(S(\rho ) = \kappa\) n \(V(\rho )[1 - D(\rho /L)]\),
 
-\[\Delta(x) = \frac{d\ln S}{d\ln\rho} - 2 = 1 - \frac{x\, D'(x)}{1 - D(x)} = 1 - \frac{(d-\alpha)\, c\, x^{d-\alpha}}{1 - c\, x^{d-\alpha}}. \tag{5.2}\]
+\begin{equation}\Delta(x) = \frac{d\ln S}{d\ln\rho} - 2 = 1 - \frac{x\, D'(x)}{1 - D(x)} = 1 - \frac{(d-\alpha)\, c\, x^{d-\alpha}}{1 - c\, x^{d-\alpha}}. \tag{5.2}\end{equation}
 
 At \(\alpha  = 1\) (Figure 4):
 
@@ -896,7 +904,7 @@ The spatial slice of flat FRW is infinite; its flatness is already used,
 in the cosmology paper's §2, to normalise \(\Omega _\mathrm{DE}0\). With
 L → ∞, D → 0 and
 
-\[\Delta = 1 \quad\text{exactly.} \tag{5.3}\]
+\begin{equation}\Delta = 1 \quad\text{exactly.} \tag{5.3}\end{equation}
 
 We are explicit about the status of this step, because it is where the
 value of \(\Delta\) actually enters. The argument above eliminates the
@@ -1024,7 +1032,7 @@ site carries a finite Hilbert dimension \(e^{\kappa }\), so the site
 algebra of a region \(\Omega\) is a finite-dimensional factor with dim
 𝓗\_\(\Omega  = e^{\kappa |\Omega |}\). Its maximally mixed (tracial)
 state assigns
-\[S(\Omega) \;=\; \log \dim \mathcal{H}_\Omega \;=\; \kappa|\Omega| \qquad \text{for \emph{every} } \Omega,\]
+\begin{equation}S(\Omega) \;=\; \log \dim \mathcal{H}_\Omega \;=\; \kappa|\Omega| \qquad \text{for \emph{every} } \Omega,\end{equation}
 i.e.~it attains the capacity bound of §\ref{sec-2-2} identically, region
 by region --- not as a fine-tuned configuration but as the
 maximum-entropy state of the very algebra whose capacity §\ref{sec-2}
@@ -1054,14 +1062,14 @@ On the volume branch \((\alpha  < d)\) with the saturating state,
 \(S(\rho ) = C(\rho ) = \kappa\) n \(V(\rho )\), so the entropy density
 is the constant
 
-\[s_0 = \kappa n = \kappa/\ell_P^3 \tag{6.1}\]
+\begin{equation}s_0 = \kappa n = \kappa/\ell_P^3 \tag{6.1}\end{equation}
 
 of eq. (2.7) --- the cosmology paper's \(s_{\mathrm{grav}}\), legs per
 Planck cell. A horizon does not, however, carry its full volume capacity
 at every epoch: the capacity is \emph{populated} as structure drives it.
 Writing \(f_{\mathrm{sat}} \in  [0\), 1{]} for the activated fraction,
 
-\[S = f_{\rm sat}\, s_0\, V, \tag{6.2}\]
+\begin{equation}S = f_{\rm sat}\, s_0\, V, \tag{6.2}\end{equation}
 
 the driven limit \(f_{\mathrm{sat}}\) → 1 is the volume law
 \((\Delta  = 1)\) and the undriven limit \(f_{\mathrm{sat}}\) → 0 is the
@@ -1219,7 +1227,7 @@ the volume-like \(\Delta = 1\); the volume count is the
 remains the empirical bet of the cosmology paper, tested by DESI DR3 +
 Euclid, not a theorem of this counting. \textbf{(iii)} The bridge to
 cosmology is an \emph{empirical ansatz}, not a derivation:
-\[C_{\rm str}\ \longrightarrow\ q_R = \sigma_R^2\ \longrightarrow\ u(q_R),\]
+\begin{equation}C_{\rm str}\ \longrightarrow\ q_R = \sigma_R^2\ \longrightarrow\ u(q_R),\end{equation}
 i.e.~the complexity is identified with the model-owned filtered matter
 variance \(q_R = \sigma_R^2\) (R = 8 \(h^{-1}Mpc\)) that gates the
 FPAB-SEDE background --- and its ensemble and renormalization are
@@ -1334,31 +1342,31 @@ entry point, with validation assertions at each stage:
 \begin{itemize}
 \tightlist
 \item
-  \texttt{src/mincut\_membrane.py} --- maximum-flow minimum cut on the
+  \texttt{src/\allowbreak mincut\_\allowbreak membrane.\allowbreak py} --- maximum-flow minimum cut on the
   lattice ball; membrane-thickness and shell-fraction diagnostics
   (§\ref{sec-2-5}, tables i--ii).
 \item
-  \texttt{src/capacity\_radial.py} --- spherical reduction with the
+  \texttt{src/\allowbreak capacity\_\allowbreak radial.\allowbreak py} --- spherical reduction with the
   exact angular average; the \(\alpha\)-crossover table of
   §\ref{sec-2-3} and the large-\(\rho\) \(C(\rho )/\rho ^{2}\)
   diagnostic (marginal-log at \(\alpha  = d + 1\) vs clean area at
   \(\alpha  > d + 1\)), asserted.
 \item
-  \texttt{src/outward\_fraction\_bound.py} --- the finite-size
+  \texttt{src/\allowbreak outward\_\allowbreak fraction\_\allowbreak bound.\allowbreak py} --- the finite-size
   outward-fraction bound of Proposition 2.1: fits the capacity-deficit
   exponent against the predicted \(d - \alpha\) and checks every
   measured deficit against the proved bound \(K(\rho /L)^{d-\alpha }\),
   asserted.
 \item
-  \texttt{src/edge\_deficit.py} --- Newton-kernel solve at
+  \texttt{src/\allowbreak edge\_\allowbreak deficit.\allowbreak py} --- Newton-kernel solve at
   \(\alpha  = 1\); the deficit law and the convergence of c
   (§\ref{sec-5-1}).
 \item
-  \texttt{src/horizon\_constraint.py} --- symbolic expansion of the
+  \texttt{src/\allowbreak horizon\_\allowbreak constraint.\allowbreak py} --- symbolic expansion of the
   apparent-horizon condition, eq. (2.9); verified against the exact mean
   curvature of a translated sphere.
 \item
-  \texttt{src/ams\_stability.py} --- external-standard check: eq. (2.9)
+  \texttt{src/\allowbreak ams\_\allowbreak stability.\allowbreak py} --- external-standard check: eq. (2.9)
   is the Andersson--Mars--Simon MOTS stability operator on the FRW round
   sphere. Independent (surface-of-revolution) derivation of
   −(1/\(\bar{R}\))\((\nabla ^{2}_{\mathrm{S}} + 2)\), the published
@@ -1366,11 +1374,11 @@ entry point, with validation assertions at each stage:
   the AMS matter term \(8\pi\) \(T_{ab}\ell ^{a}\) \(k^{b} = 3H^{2}\)+Ḣ
   that isolates the slicing caveat.
 \item
-  \texttt{run\_all.py} --- single entry point; runs every stage with
+  \texttt{run\_\allowbreak all.\allowbreak py} --- single entry point; runs every stage with
   validation assertions.
 \item
-  \texttt{figures/make\_figures.py} --- regenerates the four figures
-  from the same \texttt{src/} computations (Figs 1--4 →
+  \texttt{figures/\allowbreak make\_\allowbreak figures.\allowbreak py} --- regenerates the four figures
+  from the same \texttt{src/\allowbreak } computations (Figs 1--4 →
   \texttt{output/count\_fig\{0–3\}\_*.png}).
 \end{itemize}
 
@@ -1385,9 +1393,9 @@ at \url{https://github.com/spsingularity/sede-count}, with a tagged
 release archived at Zenodo, DOI
 \href{https://doi.org/10.5281/zenodo.21525522}{10.5281/zenodo.21525522}.
 Every quantitative claim is reproduced from a single entry point
-(\texttt{run\_all.py}), each stage carrying validation assertions that
+(\texttt{run\_\allowbreak all.\allowbreak py}), each stage carrying validation assertions that
 all pass, and the four figures regenerate from the same computations via
-\texttt{figures/make\_figures.py}. No observational data were generated
+\texttt{figures/\allowbreak make\_\allowbreak figures.\allowbreak py}. No observational data were generated
 or analysed beyond the standard public inputs cited in the companion
 papers.
 
@@ -1418,6 +1426,7 @@ editing the manuscript, developing and cross-checking the analysis code,
 and literature searches; all output, including every literature
 reference, was checked by the author, who takes full responsibility for
 the content. No AI tool is an author.
-\bibliographystyle{iopart-num}
-\bibliography{refs,refs_foundations}
+
+\bibliographystyle{apsrev4-2}
+\bibliography{refs}
 \end{document}

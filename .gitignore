@@ -16,3 +16,17 @@ paper/tex/*.synctex.gz
 paper/tex/*.build.log
 paper/tex/*Notes.bib
 paper/tex/*.pdf
+
+# PRD (REVTeX) build intermediates — mirror of the iopart rules above
+paper/tex_prd/*.aux
+paper/tex_prd/*.log
+paper/tex_prd/*.blg
+paper/tex_prd/*.bbl
+paper/tex_prd/*.out
+paper/tex_prd/*.toc
+paper/tex_prd/*.fls
+paper/tex_prd/*.fdb_latexmk
+paper/tex_prd/*.synctex.gz
+paper/tex_prd/*.build.log
+paper/tex_prd/*Notes.bib
+paper/tex_prd/*.pdf

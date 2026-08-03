@@ -1,0 +1,117 @@
+% Pandoc template for Physical Review D (REVTeX 4.2, preprint/one-column).
+% Engine: pdflatex — REVTeX is pdflatex-native; xelatex+STIX lacks the glyph REVTeX
+% uses for the email footnote marker. Prose Unicode is handled by newunicodechar below.
+\documentclass[aps,prd,preprint,nofootinbib,superscriptaddress]{revtex4-2}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else
+  \usepackage{fontspec}
+  \setmainfont{STIX Two Text}
+\fi
+
+\usepackage{amsmath,amssymb,graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{orcidlink}
+
+% make bare math commands the preprocessors may leave in text mode robust (surd etc.)
+\makeatletter
+\let\pandocsurd\surd \renewcommand{\surd}{\ensuremath{\pandocsurd}}
+\makeatother
+
+% --- prose Unicode operators -> math (works under xe/pdf latex) ---
+\usepackage{newunicodechar}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{∂}{\ensuremath{\partial}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{∎}{\ensuremath{\blacksquare}}
+\newunicodechar{□}{\ensuremath{\Box}}
+\newunicodechar{∝}{\ensuremath{\propto}}
+\newunicodechar{∞}{\ensuremath{\infty}}
+\newunicodechar{∫}{\ensuremath{\int}}
+\newunicodechar{≈}{\ensuremath{\approx}}
+\newunicodechar{≠}{\ensuremath{\neq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≥}{\ensuremath{\geq}}
+\newunicodechar{≪}{\ensuremath{\ll}}
+\newunicodechar{≫}{\ensuremath{\gg}}
+\newunicodechar{≲}{\ensuremath{\lesssim}}
+\newunicodechar{⊙}{\ensuremath{\odot}}
+\newunicodechar{⊗}{\ensuremath{\otimes}}
+\newunicodechar{⟹}{\ensuremath{\Longrightarrow}}
+\newunicodechar{⟺}{\ensuremath{\Longleftrightarrow}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⇔}{\ensuremath{\Leftrightarrow}}
+\newunicodechar{𝓗}{\ensuremath{\mathcal{H}}}
+\newunicodechar{√}{\ensuremath{\surd}}
+% Paper II notation that pdflatex (unlike the iopart/xelatex build) cannot resolve on its own.
+% NOTE: the areal radius is written \bar{R} in the markdown source, NOT as a U+0304 combining
+% macron. A newunicodechar mapping for U+0304 cannot work — a combining mark follows its base
+% letter, so LaTeX cannot reach back to accent it, and any forward-placed glyph renders R̄² as the
+% physically WRONG R^{-2}. Keep the source free of U+0304.
+\newunicodechar{⁴}{\ensuremath{^{4}}}                % U+2074 superscript four
+\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{∇}{\ensuremath{\nabla}}
+\newunicodechar{↔}{\ensuremath{\leftrightarrow}}
+\newunicodechar{⟨}{\ensuremath{\langle}}
+\newunicodechar{⟩}{\ensuremath{\rangle}}
+\newunicodechar{−}{\ensuremath{-}}
+\newunicodechar{ℓ}{\ensuremath{\ell}}
+\newunicodechar{ħ}{\ensuremath{\hbar}}
+\newunicodechar{′}{\ensuremath{{}^\prime}}
+\newunicodechar{Ḣ}{\ensuremath{\dot H}}
+\newunicodechar{Ṡ}{\ensuremath{\dot S}}
+\newunicodechar{₊}{\ensuremath{{}_{+}}}
+
+% --- pandoc body requirements ---
+\usepackage{longtable,booktabs,array}
+\usepackage{calc}
+\usepackage{float}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{%
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi%
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+\makeatother
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\graphicspath{{../}{../figures/}}
+
+% DOIs must never hyphenate: a broken 'zen-odo' does not resolve if copied
+\hyphenation{zenodo Zenodo}
+
+\setlength{\emergencystretch}{3em}
+
+\begin{document}
+
+\title{$title$}
+
+\author{Stilian Pandev\,\orcidlink{0009-0005-8153-071X}}
+\email{stilianpandev@gmail.com}
+\affiliation{Independent researcher}
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+\maketitle
+
+$if(keywords)$
+\noindent\textbf{Keywords:} $keywords$
+\vspace{6pt}
+$endif$
+
+$body$
+
+\bibliographystyle{apsrev4-2}
+\bibliography{refs}
+\end{document}

@@ -1,40 +1,44 @@
-# Barrow Δ ≤ 1 from a long-range entanglement network: a capacity theorem and an area–volume dichotomy
+# A capacity theorem for long-range entanglement networks: the area–volume dichotomy and a bound on Barrow entropy
 
-*(Companion to the cosmology paper [@Pandev:2026cosmology] and the foundations paper [@Pandev:2026foundations].
-All quantitative claims are reproduced by the accompanying code, each with validation assertions.
-The cosmological results of the cosmology and foundations papers stand independently of the reduction developed here.
-**Conversely, and for the reader who has not seen those companions: the results of §2 — the capacity
-theorem C(Ω) ≤ κ|Ω| and hence Δ ≤ 1, the area/volume dichotomy, the α = d crossover with its
-finite-size bound, and the α < d absence of a minimum-cut surface — are self-contained. They are
-statements about the network model of §2.1 alone, take no input from either companion, and are
-state-independent (§6.1). The companions supply the cosmological motivation for asking the question
-and the state half of the interpretation; neither is used to obtain the theorem.** Both companion
-manuscripts are available from the author on request.)*
+*(**This paper is self-contained.** The results of §2 — the capacity theorem C(Ω) ≤ κ|Ω| and hence
+Δ ≤ 1, the area/volume dichotomy, the α = d crossover with its finite-size bound, and the α < d
+absence of a minimum-cut surface — are statements about the network model of §2.1 alone. They are
+state-independent (§6.1) and take no input from any other work. Readers interested only in the
+network theorems need read no further than §4.*
+
+*The paper is also a companion to the cosmology paper [@Pandev:2026cosmology] and the foundations
+paper [@Pandev:2026foundations], which supply the cosmological motivation for asking the question
+and the state half of its interpretation; neither is used to obtain the theorem, and the
+cosmological results of both stand independently of the reduction developed here. Both companion
+manuscripts are available from the author on request. All quantitative claims are reproduced by the
+accompanying code, each with validation assertions.)*
 
 ---
 
 ## Abstract
 
 We model the degrees of freedom of a gravitational horizon as a network of Planck-density sites, each
-with a bounded total entanglement weight κ (a finite local Hilbert-space dimension) and bond weights
-decaying with separation as w(r) ∝ r^(−α). Three results follow. First, the bond-cut capacity of any
-region Ω obeys C(Ω) ≤ κ|Ω|, so the Barrow entropy deformation satisfies **Δ ≤ 1 as a theorem** of the
-model (the *bound*; attaining Δ = 1 additionally needs the α < d volume-basin geometry — derived here
-with an explicit finite-size error bound, uniform in position — and a cut-saturating horizon *state*,
-which we identify as the tracial state of the site algebra, leaving open only whether a physical
-horizon is driven to it) — no fractal-horizon geometry is needed, and for long-range couplings (α < d) none is available,
-since the minimum cut is not a surface. Second, the capacity is the enclosed *volume* (Δ = 1) for every
-range α < d and the boundary *area* (Δ = 0) for α > d + 1; gravity's Newtonian reach (α = 1) lies deep
-in the volume phase, and no gravitational coupling produces an intermediate range, so a measured
-intermediate Δ falsifies the picture rather than selecting a parameter. Third, Δ = 1 exactly is the
-infrared-cutoff endpoint L → ∞ — a stated choice, not a derivation. What the network counts is a
-structural capacity (not manifestly the generalized entropy), and the volume identification is the
-non-default, empirically-bet-on branch: DESI DR3 + Euclid decide Δ = 1 versus 0 at a forecast
-σ(Δ) ≈ 0.09. This shortens — it does not eliminate — the assumption list behind the volume-law
-postulate of Structural Entropy Dark Energy. The results of §2 are self-contained and can be assessed
-on their own: the capacity theorem, the dichotomy and the crossover are statements about the network
-model of §2.1 alone, are state-independent, and take no input from the companion papers cited here,
-which supply the cosmological motivation for the question and the state half of its interpretation.
+with a bounded total entanglement weight κ — a finite local Hilbert-space dimension — and bond weights
+decaying with separation as w(r) ∝ r^(−α). Three results follow, each a theorem about this model
+alone. First, a capacity theorem: the bond-cut capacity of any region Ω obeys C(Ω) ≤ κ|Ω|, so the
+Barrow entropy deformation satisfies **Δ ≤ 1** identically; no fractal-horizon geometry is needed to
+bound it, and for long-range couplings (α < d) none is available, since the minimum cut is not a
+surface. Second, an area–volume dichotomy: the capacity is the enclosed *volume* (Δ = 1) for every
+range α < d and the boundary *area* (Δ = 0) for α > d + 1, with the crossover at α = d exactly, and
+the volume basin is derived with an explicit finite-size error bound, uniform in position; gravity's
+Newtonian reach (α = 1) lies deep in the volume phase, and no gravitational coupling produces an
+intermediate range, so a measured intermediate Δ falsifies the picture rather than selecting a
+parameter — DESI DR3 and Euclid decide Δ = 1 versus Δ = 0 at a forecast σ(Δ) ≈ 0.09. Third, Δ = 1
+exactly is the infrared-cutoff endpoint L → ∞. We state the limits explicitly: attaining Δ = 1
+requires, beyond the α < d geometry, a cut-saturating horizon *state*, which we identify as the
+tracial state of the site algebra, and whether a physical horizon is driven to it is left open; the
+L → ∞ endpoint is a stated choice, not a derivation; what the network counts is a structural capacity,
+not manifestly the generalized entropy; and the volume identification is the non-default,
+empirically-bet-on branch. This shortens — it does not eliminate — the assumption list behind the
+volume-law postulate of Structural Entropy Dark Energy. The results of §2 are self-contained: the
+capacity theorem, the dichotomy and the crossover are statements about the network model of §2.1
+alone, are state-independent, and take no input from the companion papers cited here, which supply
+only the cosmological motivation for the question and the state half of its interpretation.
 
 **Keywords —** holographic dark energy; horizon thermodynamics; entanglement entropy; de Sitter
 holography; Barrow entropy; long-range systems; apparent horizon; dark energy.
@@ -43,7 +47,18 @@ holography; Barrow entropy; long-range systems; apparent horizon; dark energy.
 
 ## 1. Introduction
 
-Structural Entropy Dark Energy (SEDE) reproduces the cosmological data with no fitted dark-sector
+How much entropy can a region of a gravitational horizon carry, and does that count scale with the
+enclosed *volume* or with the bounding *area*? We answer this inside a concrete model. The horizon
+degrees of freedom are a network with a finite per-site *leg budget* κ — equivalently, a finite local
+Hilbert-space dimension — and bond weights that decay as a power, w(r) ∝ r^{−α}. From this single
+premise three results follow, each a statement about the network alone: a capacity theorem bounding
+the Barrow deformation by Δ ≤ 1, an area–volume dichotomy with an exact crossover at α = d that places
+gravity's 1/r reach deep in the volume phase, and the identification of Δ = 1 as the infrared-cutoff
+endpoint L → ∞. The network cut-scaling that underlies the dichotomy is a question in long-range
+percolation and small-world graph theory; what is new here is reading a *horizon* entropy count off it.
+
+The question is not idle, and the motivation for asking it is cosmological. Structural Entropy Dark
+Energy (SEDE) reproduces the cosmological data with no fitted dark-sector
 parameter, at the cost of a single foundational input: the cosmic apparent horizon carries
 *volume-law* entropy, S ∝ V (Barrow deformation Δ = 1), rather than the Bekenstein–Hawking area law.
 The cosmology paper [@Pandev:2026cosmology] fixes the background from this input and confronts it with the data; the foundations paper [@Pandev:2026foundations] asks how much of
@@ -52,13 +67,10 @@ entangled), *form* (a thermalised state has volume-law entanglement), *scale* (t
 bound fixes ρ_DE ∼ ρ_crit), and *count* (whether the entropy counts the enclosed *bulk* degrees of
 freedom or the *boundary* ones). The first three reduce to established physics; the count — bulk versus
 boundary — is the residue the foundations paper names as irreducible, a de Sitter holography question with no
-shortcut past the observer-algebra trace calibration.
+shortcut past the observer-algebra trace calibration. This paper reduces that count to a shorter list
+of stated assumptions; it does not fully discharge it.
 
-This paper reduces the count to a shorter list of stated assumptions; it does not fully discharge it.
-We model the horizon degrees of freedom as a network with a finite
-per-site *leg budget* κ — equivalently, a finite local Hilbert-space dimension — and bond weights that
-decay as a power, w(r) ∝ r^{−α}. From this single, weaker premise three results follow (Figure 1), each
-machine-checked (§Reproducibility):
+The three results in detail (Figure 1), each machine-checked (§Reproducibility):
 
 1. **Δ ≤ 1 is a theorem** (§2.2). The bond-cut capacity of any region obeys C(Ω) ≤ κ·|Ω| identically —
  the entropy a region can carry cannot exceed its degree-of-freedom count. No fractal ceiling and no
@@ -332,7 +344,7 @@ An independent confirmation from the classical side: in linearised GR the appare
 condition θ₊ = 0 is, in Newtonian gauge (where the constant-time slicing is shear-free, so
 K_ij is pure trace), the constant-mean-curvature condition 𝓜 = 2H. It is the Euler–Lagrange
 equation of A[h] − 2H·V[h], and since the area functional
-A = R̄²∫dΩ[(1+h)² + ½|∇_S h|² + O(|∇_S h|⁴)] carries no cubic term, the constraint reads
+A = $\bar{R}^2$∫dΩ[(1+h)² + ½|∇_S h|² + O(|∇_S h|⁴)] carries no cubic term, the constraint reads
 
 $$\nabla_S^2 h + 2h + 2h^2 = 2\mathcal{S}, \qquad \mathcal{S} = \Phi + \Psi + \dot\Psi/H - H^{-1}\partial_R \Psi. \tag{2.9}$$
 
@@ -346,10 +358,10 @@ second order in gauge-invariant perturbation theory [@Neuser:2026unc].
 
 This operator is not ours to invent: ∇²_S + 2 is the Andersson–Mars–Simon marginally-outer-trapped-surface
 (MOTS) stability operator [@Andersson:2007fh] specialised to the FRW apparent horizon. On the round 2-sphere
-(areal radius R̄ = 1/H) the AMS operator L ψ = −∇²_S ψ + 2 s^A D_A ψ + (½R_S − |σ⁺|² − s_A s^A +
+(areal radius $\bar{R}$ = 1/H) the AMS operator L ψ = −∇²_S ψ + 2 s^A D_A ψ + (½R_S − |σ⁺|² − s_A s^A +
 D_A s^A − 8π T_{ab}ℓ^a k^b)ψ collapses — spherical symmetry gives s_A = 0, the horizon is
 shear-free (σ⁺ = 0), and for the within-slice shape variation it reduces to the classical
-mean-curvature Jacobi operator −(∇²_S + |A|²) with |A|² = 2/R̄², i.e. exactly −(1/R̄)(∇²_S + 2). Its
+mean-curvature Jacobi operator −(∇²_S + |A|²) with |A|² = 2/$\bar{R}^2$, i.e. exactly −(1/$\bar{R}$)(∇²_S + 2). Its
 spectrum is the published one, ℓ(ℓ+1) − 2, and the **ℓ = 1 kernel is the translation zero mode
 every MOTS stability operator carries** — not a coincidence but the sphere's freedom to be
 displaced. We reproduce this independently, by a second geometric route (surface-of-revolution
@@ -780,7 +792,7 @@ validation assertions at each stage:
   eq. (2.9); verified against the exact mean curvature of a translated sphere.
 - `src/ams_stability.py` — external-standard check: eq. (2.9) is the Andersson–Mars–Simon MOTS
   stability operator on the FRW round sphere. Independent (surface-of-revolution) derivation of
-  −(1/R̄)(∇²_S + 2), the published spectrum ℓ(ℓ+1) − 2 with the ℓ = 1 translation zero mode, and the
+  −(1/$\bar{R}$)(∇²_S + 2), the published spectrum ℓ(ℓ+1) − 2 with the ℓ = 1 translation zero mode, and the
   AMS matter term 8π T_{ab}ℓ^a k^b = 3H² + Ḣ that isolates the slicing caveat.
 - `run_all.py` — single entry point; runs every stage with validation assertions.
 - `figures/make_figures.py` — regenerates the four figures from the same `src/` computations
